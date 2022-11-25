@@ -1,3 +1,5 @@
+import { ModelStatic } from 'sequelize';
+
 import { IUsers } from '../interfaces/IUser';
 import User from '../models/User';
 
@@ -9,7 +11,9 @@ const UNAUTHORIZED = 401;
 export default class UserService {
   public jwtutils = new JwtUtils();
   public bcrypts = new EncryptPassword();
-  public userM = new User();
+
+  constructor(private model: ModelStatic<User> = User) {
+  }
 
   public async login(user: IUsers) {
     const userInfo = await User.findOne({ where: { email: user.email } });
@@ -25,6 +29,16 @@ export default class UserService {
     }
 
     const token = this.jwtutils.createToken(userInfo.email);
-    return { code: null, message: token };
+    return { code: null, token };
+  }
+
+  public async verify(user: IUsers) {
+    const userInfo = await this.model.findOne({ where: { email: user.email } });
+
+    if (!userInfo) {
+      return { code: UNAUTHORIZED, message: ' email or password invalid' };
+    }
+
+    return { code: null, message: userInfo.role };
   }
 }

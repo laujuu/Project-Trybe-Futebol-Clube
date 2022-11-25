@@ -17,7 +17,6 @@ export default class JwtUtils {
   }
 
   public validateToken(token: string) {
-    const validate = this.verify(token, process.env.JWT_SECRET as string);
-    return validate;
+    return this.verify(token, process.env.JWT_SECRET as string);
   }
 }
