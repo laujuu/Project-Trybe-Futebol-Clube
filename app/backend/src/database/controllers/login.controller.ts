@@ -24,7 +24,6 @@ export default class LoginController {
 
   async verifyUser(req: Request, res: Response) {
     const user = req.body;
-    console.log('body', user);
     const { code, message } = await this.usersService.verify(user);
 
     if (code) {

@@ -24,9 +24,8 @@ export default class LoginMiddleware {
       return res.status(BAD_REQUEST).json({ message: 'Token not found' });
     }
     try {
-      const teste = this.jwtutils.validateToken(authorization as string);
-      console.log(teste);
-      req.body = teste;
+      const validate = this.jwtutils.validateToken(authorization as string);
+      req.body = validate;
     } catch (err) {
       return res.status(BAD_REQUEST).json({ message: 'Expired or invalid token' });
     }
