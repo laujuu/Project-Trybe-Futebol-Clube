@@ -6,5 +6,6 @@ const router = Router();
 const teamsController = new TeamsController();
 
 router.get('/', teamsController.findAllTeams.bind(teamsController));
+router.get('/:id', teamsController.findTeamsById.bind(teamsController));
 
 export default router;
