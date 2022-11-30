@@ -1,7 +1,7 @@
 import { ITeams } from './ITeams';
 
 export default interface IMatch {
-  id: number;
+  id?: number;
   homeTeam: number;
   awayTeam: number;
   homeTeamGoals: number;

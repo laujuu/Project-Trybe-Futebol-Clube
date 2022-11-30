@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { JwtPayload } from 'jsonwebtoken';
 import JwtUtils from '../utils/jwt.util';
 
 const BAD_REQUEST = 400;
@@ -24,11 +25,11 @@ export default class LoginMiddleware {
       return res.status(BAD_REQUEST).json({ message: 'Token not found' });
     }
     try {
-      const validate = this.jwtutils.validateToken(authorization as string);
+      const validate = this.jwtutils.validateToken(authorization) as JwtPayload;
       req.body = validate;
     } catch (err) {
       return res.status(BAD_REQUEST).json({ message: 'Expired or invalid token' });
     }
-    return next();
+    next();
   };
 }

@@ -25,4 +25,16 @@ export default class MatchsService {
     });
     return teams;
   }
+
+  public async addNewMatch(match: IMatchs): Promise<IMatchs[]> {
+    const addNew = await this.model.create({ ...match, inProgress: true });
+    return addNew as unknown as IMatchs[];
+  }
+
+  public async endMatch(id: string) {
+    const teamInfo = await this.model.findByPk(id);
+
+    const updated = await teamInfo?.update({ inProgress: false });
+    return updated;
+  }
 }
