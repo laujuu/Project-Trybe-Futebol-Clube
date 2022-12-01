@@ -37,4 +37,11 @@ export default class MatchsService {
     const updated = await teamInfo?.update({ inProgress: false });
     return updated;
   }
+
+  public async updateMatch(id: string, homeTeamGoals: number, awayTeamGoals: number) {
+    const teamInfo = await this.model.findByPk(id);
+
+    const updated = await teamInfo?.update({ homeTeamGoals, awayTeamGoals });
+    return updated;
+  }
 }
